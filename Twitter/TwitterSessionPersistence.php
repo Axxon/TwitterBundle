@@ -158,12 +158,26 @@ class TwitterSessionPersistence extends Codebird
     return $this->prefix . implode( '_', array( 't', $this->getAppId( ), $key, ) );
   }
   
-  public function post($data)
+  public function post( $data, $app = true )
   {
-    if(!empty($this->config['access_token']) && !empty($this->config['access_token_secret']))
+    $access_token = null;
+    $access_token_secret = null;
+    
+    if( $app )
     {
-      $this->setToken( $this->config['access_token'], $this->config['access_token_secret'] );
-      return $this->_callApi('POST', 'statuses/update', 'statuses/update', $data);
+      $access_token = $this->config['access_token'];
+      $access_token_secret = $this->config['access_token_secret'];
+    }
+    else
+    {
+      $access_token = $this->session->get( 'oauth_token' );
+      $access_token_secret = $this->session->get( 'oauth_token_secret' );
+    }
+    
+    if(!empty($access_token) && !empty($access_token_secret))
+    {
+      $this->setToken( $access_token, $access_token_secret );
+      return $this->_callApi( 'POST', 'statuses/update', 'statuses/update', $data );
     }
     
     return false;
