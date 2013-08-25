@@ -28,8 +28,8 @@ class Configuration implements ConfigurationInterface
     $rootNode->children( )// childrens
         ->scalarNode( 'consumer_key' )->isRequired( )->cannotBeEmpty( )->end( ) // consumer key
         ->scalarNode( 'consumer_secret' )->isRequired( )->cannotBeEmpty( )->end( ) // consumer secret
-        ->scalarNode( 'access_token' )->defaultNull( )->end( ) // access_token
-        ->scalarNode( 'access_token_secret' )->defaultNull( )->end( ) // access_token_secret
+        ->scalarNode( 'access_token' )->defaultNull( )->end( ) // access token
+        ->scalarNode( 'access_token_secret' )->defaultNull( )->end( ) // access token secret
         ->scalarNode( 'callback_url' )->defaultNull( )->end( ) // calback url
         ->scalarNode( 'callback_route' )->defaultNull( )->end( ) // callback route
         ->arrayNode( 'class' )->addDefaultsIfNotSet( )->children( ) // clasess

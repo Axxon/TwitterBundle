@@ -155,6 +155,17 @@ class TwitterSessionPersistence extends Codebird
   
   protected function constructSessionVariableName( $key )
   {
-    return $this->prefix . implode( '_', array( 'g', $this->getAppId( ), $key, ) );
+    return $this->prefix . implode( '_', array( 't', $this->getAppId( ), $key, ) );
+  }
+  
+  public function post($data)
+  {
+    if(!empty($this->config['access_token']) && !empty($this->config['access_token_secret']))
+    {
+      $this->setToken( $this->config['access_token'], $this->config['access_token_secret'] );
+      return $this->_callApi('POST', 'statuses/update', 'statuses/update', $data);
+    }
+    
+    return false;
   }
 }
